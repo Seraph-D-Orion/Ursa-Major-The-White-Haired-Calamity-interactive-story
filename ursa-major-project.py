@@ -5,7 +5,7 @@ import streamlit as st
 from dotenv import load_dotenv
 from google import genai
 
-load_dotenv(Path(__file__).resolve().with_name(".env"))
+load_dotenv()
 api_key = os.getenv("GEMINI_API_KEY")
 client = genai.Client(api_key=api_key) if api_key else None
 
@@ -128,12 +128,16 @@ Outcome: {outcome}
 
 """
     try:
-        response = client.models.generate_content(
-            model="gemini-2.5-flash",
-            contents=prompt,
+        response = client.interactions.create(
+            model="gemini-3.5-flash-lite",
+            input=prompt,
+            generation_config={"thinking_level": "minimal"}
         )
-        return response.text.strip() if response.text else fallback
-    except Exception:
+        if response.output_text:
+            return response.output_text
+        return fallback
+    except Exception as error:
+        st.error(f"Gemini error: {error}")
         return fallback
 
 
