@@ -116,7 +116,7 @@ def generate_story(scene_label: str, action: str, outcome: str, fallback: str) -
     prompt = f"""
                 You are the narrator for a One Piece-inspired dark-sea adventure called
                 'Ursa Major: The White-Haired Calamity', featuring Captain Seraph D. Orion.
-                Write 200-300 words in second person with graphic  one piece pirate atmosphere.
+                Write 50-100 words in second person with graphic wimisical one piece pirate atmosphere.
                 Do NOT change the health, inventory,. please do change the outcome, new coices.
 
 Crewmate: {crew_summary}
