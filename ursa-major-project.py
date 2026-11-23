@@ -114,8 +114,10 @@ def generate_story(scene_label: str, action: str, outcome: str, fallback: str) -
     inv_text = ", ".join(st.session_state.inventory) if st.session_state.inventory else "Empty"
 
     prompt = f"""
-You are the narrator for a One Piece-inspired dark-sea adventure called
-'Ursa Major: The White-Haired Calamity', featuring Captain Seraph D. Orion.
+                You are the narrator for a One Piece-inspired dark-sea adventure called
+                'Ursa Major: The White-Haired Calamity', featuring Captain Seraph D. Orion.
+                Write 200-300 words in second person with graphic  one piece pirate atmosphere.
+                Do NOT change the health, inventory,. please do change the outcome, new coices.
 
 Crewmate: {crew_summary}
 Scene: {scene_label}
@@ -124,8 +126,6 @@ Inventory: {inv_text}
 Action: {action}
 Outcome: {outcome}
 
-Write 200-300 words in second person with graphic nautical/pirate atmosphere.
-Do NOT change the outcome, health, inventory, or introduce new choices.
 """
     try:
         response = client.models.generate_content(
@@ -206,15 +206,15 @@ def show_crew_sidebar():
 # ================================================================
 if not st.session_state.game_started:
     st.write(
-        "Join **Captain Seraph D. Orion** (*The White-Haired Calamity*) aboard the "
-        "**Ursa Major** across perilous *One Piece* seas. please Create your crewmate to begin."
+        "Join honourable **Captain Seraph D. Orion** (*The White-Haired Calamity*) aboard the "
+        "**Ursa Major** across perilous *One Piece* seas. please Create your own unique crewmate to begin."
     )
 
     crew_name = st.text_input("Crewmate Name")
 
     race_choice = st.selectbox(
         "Race",
-        ["Human", "three eyed tribe", "Fish-Man", "merefolk", "Skypiean", "Mink", "Giant", "buaccanaer", "Custom"],
+        ["Human", "three eyed tribe", "Fish-Man", "merefolk", "Skypiean", "Mink", "Giant", "buaccanaer", "lunanarian", "Custom"],
     )
     custom_race = st.text_input("Custom Race (if selected)") if race_choice == "Custom" else ""
     final_race = (
@@ -270,7 +270,7 @@ else:
 
     if st.session_state.health <= 0:
         show_scene_header(
-            "💀 Voyage Lost",
+            "💀 Voyage Lost ",
             f"The seas is claim for now {st.session_state.crew_name} and push the Ursa Major off course.",
         )
         st.error("Game Over — Your health reached 0.")
@@ -282,7 +282,7 @@ else:
     if scene == "quarterdeck":
         show_scene_header(
             "⚓ Scene 1: Quarterdeck of the Ursa Major",
-            "White hair whipping in the fresh salt wind, Captain Seraph D. Orion stands at the helm "
+            "White hair whipping in the fresh salt wind, Captain Seraph D. Orion stands at the helm he glaces back at you with a look of haapyness you are there and safe."
             "as storm clouds start to gather ahead on the Grand Line.",
         )
         show_continue_button("Head Below to the Galley please to continue ➡️")
@@ -306,11 +306,11 @@ else:
                     )
                     set_result("item", story, "Soothe-Brew")
             with col2:
-                if st.button("Skip & Head to the Cove"):
+                if st.button("Skip & Head to the gloomy Cove"):
                     story = generate_story(
                         "Galley & Supply Hold",
-                        "leaving the crates untouched",
-                        "You keep moving without opening the crates.",
+                        "leaving the crates untouched and undispurbed",
+                        "You keep moving on without opening the crates.",
                         "You leave the swaying crates untouched and head toward the deck exit.",
                     )
                     set_result("story", story)
@@ -322,7 +322,7 @@ else:
     elif scene == "misty_cove":
         show_scene_header(
             "🌫️ Scene 3: Misty Cove & Wrecked Hull",
-            "Sea fog clings to a splintered warped hull wedged between dark rocks and foaming white surf.",
+            "Sea fog clings to a splintered warped hull wedged between dark rocks and foaming white surf. and a spooky fog linger",
         )
         if not st.session_state.action_complete:
             col1, col2 = st.columns(2)
